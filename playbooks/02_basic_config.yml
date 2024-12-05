@@ -1,0 +1,22 @@
+---
+- name: BASIC CONFIG
+  hosts: routers, switches
+  gather_facts: false
+  connection: local
+
+  tasks:
+    - name: Set hostname
+      ios_hostname:
+        hostname: "{{ inventory_hostname }}"
+
+    - name: Set domain name
+      ios_domain_name:
+        domain_name: devnet4.com
+
+    - name: Enable SSH
+      ios_feature:
+        feature: ssh
+
+    - name: Configure SSH port
+      ios_ssh:
+        port: 22

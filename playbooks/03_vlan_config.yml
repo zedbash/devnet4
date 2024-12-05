@@ -1,0 +1,28 @@
+---
+- name: Configure VLANs
+  hosts: switches
+  gather_facts: false
+  connection: local
+
+  tasks:
+    - name: Create VLAN 10
+      ios_vlan:
+        vlan_id: 10
+        name: VLAN10
+
+    - name: Create VLAN 20
+      ios_vlan:
+        vlan_id: 20
+        name: VLAN20
+
+    - name: Assign IP address to VLAN 10
+      ios_interface:
+        name: GigabitEthernet0/0/1
+        ipv4: 192.168.10.1 255.255.255.0
+        vlan: 10
+
+    - name: Assign IP address to VLAN 20
+      ios_interface:
+        name: GigabitEthernet0/0/2
+        ipv4: 192.168.20.1 255.255.255.0
+        vlan: 20

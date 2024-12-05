@@ -1,0 +1,15 @@
+---
+- name: CHECK CONNECTIVITY
+  hosts: routers, switches
+  gather_facts: false
+  connection: local
+
+  tasks:
+    - name: Test connectivity
+      ping:
+        dest: 8.8.8.8
+      register: ping_result
+
+    - name: Successful connectivity
+      assert:
+        that: ping_result.ping_output.rc == 0
