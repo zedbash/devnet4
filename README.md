@@ -1,6 +1,7 @@
 DEVNET Project 4
 
 Tree:
+''' bash
 cisco-automation/
 ├── README.md
 ├── ansible.cfg
@@ -13,3 +14,4 @@ cisco-automation/
 └── documentation/
     ├── network_diagram.md
     └── testing_results.md
+'''
