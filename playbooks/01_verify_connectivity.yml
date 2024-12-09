@@ -2,12 +2,15 @@
 - name: CHECK CONNECTIVITY
   hosts: routers, switches
   gather_facts: false
-  connection: local
+  connection: ansible.netcommon.network_cli
+
+  vars:
+    ansible_network_os: cisco.ios.ios
 
   tasks:
   - name: Test connectivity to management IP
-    ping:
-      data: 
+    cisco.ios.ios_ping:
+      dest: 
         - "192.168.1.1"
         - "192.168.1.2"
     register: result

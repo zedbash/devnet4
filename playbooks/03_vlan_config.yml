@@ -8,25 +8,40 @@
     ansible_network_os: cisco.ios.ios
 
   tasks:
-    - name: Create VLAN 10
-      ios_command:
-        commands:
-          - "vlan 10"
+  - name: Config VLANs
+    cisco.ios.ios_vlans:
+      config:
+        - name: Vlan_10
+          vlan_id: 10
+          state: active
+          shutdown: disabled
+          remote_span: true
+        - name: Vlan_20
+          vlan_id: 20
+          mtu: 610
+          state: active
+          shutdown: enabled
+      state: merged
 
-    - name: Create VLAN 20
-      ios_command:
-        commands:
-          - "vlan 20"
+#    - name: Create VLAN 10
+#      ios_command:
+#        commands:
+#          - "vlan 10"
+
+#    - name: Create VLAN 20
+#      ios_command:
+#        commands:
+#          - "vlan 20"
 
     - name: Assign IP address to VLAN 10
-      cisco.ios.ios_interface:
+      cisco.ios.ios_l3_interfaces:
         config:
-          - name: GigabitEthernet0/0/1
-            ipv4: 192.168.10.1 255.255.255.0
-            vlan: 10
-
-    - name: Assign IP address to VLAN 20
-      ios_interface:
-        name: GigabitEthernet0/0/2
-        ipv4: 192.168.20.1 255.255.255.0
-        vlan: 20
+          - name: Vlan10
+            ipv4: 
+              - address: 192.168.10.1/24
+#            vlan: 10
+          - name: Vlan20
+            ipv4:
+              - address: 192.168.20.1/24
+#            vlan: 20
+        state: merged

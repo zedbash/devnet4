@@ -8,17 +8,20 @@
     ansible_network_os: cisco.ios.ios
 
   tasks:
-    - name: Set hostname
-      ios_command:
-        commands:
+    - name: Set hostname, domain name, enable SSH
+      cisco.ios.ios_config:
+        lines: 
           - "hostname {{ inventory_hostname }}"
-
-    - name: Set domain name
-      ios_command:
-        commands:
           - "ip domain-name devnet4.com"
-
-    - name: Enable SSH
-      ios_command:
-        commands:
           - "ip ssh version 2"
+
+    - name: Terminal lines
+      cisco.ios.ios_config:
+        lines:
+          - transport input ssh
+          - login local
+        parents: line vty 0 15
+
+    - name: Save running to startup when modified
+      cisco.ios.ios_config:
+        save_when: modified
