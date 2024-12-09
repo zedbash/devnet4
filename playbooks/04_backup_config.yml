@@ -2,7 +2,10 @@
 - name: AUTOMATIC BACKUP OF RUNNING-CONFIG
   hosts: routers, switches
   gather_facts: false
-  connection: local
+  connection: ansible.netcommon.network_cli
+
+  vars:
+    ansible_network_os: cisco.ios.ios
  
   tasks:
    - name: DISPLAYING THE RUNNING-CONFIG

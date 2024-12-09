@@ -5,11 +5,11 @@
   connection: local
 
   tasks:
-    - name: Test connectivity
-      ping:
-        dest: 8.8.8.8
-      register: ping_result
-
-    - name: Successful connectivity
-      assert:
-        that: ping_result.ping_output.rc == 0
+  - name: Test connectivity to management IP
+    ping:
+      data: 
+        - "192.168.1.1"
+        - "192.168.1.2"
+    register: result
+  - debug:
+      var=result

@@ -2,24 +2,28 @@
 - name: Configure VLANs
   hosts: switches
   gather_facts: false
-  connection: local
+  connection: ansible.netcommon.network_cli
+
+  vars:
+    ansible_network_os: cisco.ios.ios
 
   tasks:
     - name: Create VLAN 10
-      ios_vlan:
-        vlan_id: 10
-        name: VLAN10
+      ios_command:
+        commands:
+          - "vlan 10"
 
     - name: Create VLAN 20
-      ios_vlan:
-        vlan_id: 20
-        name: VLAN20
+      ios_command:
+        commands:
+          - "vlan 20"
 
     - name: Assign IP address to VLAN 10
-      ios_interface:
-        name: GigabitEthernet0/0/1
-        ipv4: 192.168.10.1 255.255.255.0
-        vlan: 10
+      cisco.ios.ios_interface:
+        config:
+          - name: GigabitEthernet0/0/1
+            ipv4: 192.168.10.1 255.255.255.0
+            vlan: 10
 
     - name: Assign IP address to VLAN 20
       ios_interface:
