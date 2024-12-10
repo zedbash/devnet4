@@ -3,6 +3,8 @@
   hosts: routers, switches
   gather_facts: false
   connection: ansible.netcommon.network_cli
+  become: true
+  become_method: enable
 
   vars:
     ansible_network_os: cisco.ios.ios
