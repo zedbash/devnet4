@@ -8,9 +8,14 @@
     ansible_network_os: cisco.ios.ios
 
   tasks:
-  - name: Test connectivity to management IP
+  - name: Test connectivity to router
     cisco.ios.ios_ping:
       dest: 192.168.1.1
+    register: result
+  - debug:
+      var=result
+  - name: Test connectivity to switch
+    cisco.ios.ios_ping:
       dest: 192.168.1.2
     register: result
   - debug:
